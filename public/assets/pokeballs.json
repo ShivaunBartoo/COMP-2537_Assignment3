@@ -1,0 +1,541 @@
+{
+  "frames": {
+    "masterball_0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "masterball_1": {
+      "frame": {
+        "x": 0,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "masterball_2": {
+      "frame": {
+        "x": 0,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "masterball_3": {
+      "frame": {
+        "x": 0,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "masterball_4": {
+      "frame": {
+        "x": 0,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "masterball_5": {
+      "frame": {
+        "x": 0,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "masterball_6": {
+      "frame": {
+        "x": 0,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "masterball_7": {
+      "frame": {
+        "x": 0,
+        "y": 112,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "masterball_8": {
+      "frame": {
+        "x": 0,
+        "y": 128,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "masterball_9": {
+      "frame": {
+        "x": 0,
+        "y": 144,
+        "w": 16,
+        "h": 24
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "ultraball_0": {
+      "frame": {
+        "x": 16,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "ultraball_1": {
+      "frame": {
+        "x": 16,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "ultraball_2": {
+      "frame": {
+        "x": 16,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "ultraball_3": {
+      "frame": {
+        "x": 16,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "ultraball_4": {
+      "frame": {
+        "x": 16,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "ultraball_5": {
+      "frame": {
+        "x": 16,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "ultraball_6": {
+      "frame": {
+        "x": 16,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "ultraball_7": {
+      "frame": {
+        "x": 16,
+        "y": 112,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "ultraball_8": {
+      "frame": {
+        "x": 16,
+        "y": 128,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "ultraball_9": {
+      "frame": {
+        "x": 16,
+        "y": 144,
+        "w": 16,
+        "h": 24
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "greatball_0": {
+      "frame": {
+        "x": 32,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "greatball_1": {
+      "frame": {
+        "x": 32,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "greatball_2": {
+      "frame": {
+        "x": 32,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "greatball_3": {
+      "frame": {
+        "x": 32,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "greatball_4": {
+      "frame": {
+        "x": 32,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "greatball_5": {
+      "frame": {
+        "x": 32,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "greatball_6": {
+      "frame": {
+        "x": 32,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "greatball_7": {
+      "frame": {
+        "x": 32,
+        "y": 112,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "greatball_8": {
+      "frame": {
+        "x": 32,
+        "y": 128,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "greatball_9": {
+      "frame": {
+        "x": 32,
+        "y": 144,
+        "w": 16,
+        "h": 24
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "pokeball_0": {
+      "frame": {
+        "x": 48,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "pokeball_1": {
+      "frame": {
+        "x": 48,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "pokeball_2": {
+      "frame": {
+        "x": 48,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "pokeball_3": {
+      "frame": {
+        "x": 48,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "pokeball_4": {
+      "frame": {
+        "x": 48,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "pokeball_5": {
+      "frame": {
+        "x": 48,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "pokeball_6": {
+      "frame": {
+        "x": 48,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "pokeball_7": {
+      "frame": {
+        "x": 48,
+        "y": 112,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "pokeball_8": {
+      "frame": {
+        "x": 48,
+        "y": 128,
+        "w": 16,
+        "h": 16
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "pokeball_9": {
+      "frame": {
+        "x": 48,
+        "y": 144,
+        "w": 16,
+        "h": 24
+      },
+      "anchor": {
+        "x": 0.5,
+        "y": 1
+      }
+    }
+  },
+  "animations": {
+    "masterball": [
+      "masterball_0",
+      "masterball_1",
+      "masterball_2",
+      "masterball_3",
+      "masterball_4",
+      "masterball_5",
+      "masterball_6",
+      "masterball_7",
+      "masterball_8",
+      "masterball_9"
+    ],
+    "ultraball": [
+      "ultraball_0",
+      "ultraball_1",
+      "ultraball_2",
+      "ultraball_3",
+      "ultraball_4",
+      "ultraball_5",
+      "ultraball_6",
+      "ultraball_7",
+      "ultraball_8",
+      "ultraball_9"
+    ],
+    "greatball": [
+      "greatball_0",
+      "greatball_1",
+      "greatball_2",
+      "greatball_3",
+      "greatball_4",
+      "greatball_5",
+      "greatball_6",
+      "greatball_7",
+      "greatball_8",
+      "greatball_9"
+    ],
+    "pokeball": [
+      "pokeball_0",
+      "pokeball_1",
+      "pokeball_2",
+      "pokeball_3",
+      "pokeball_4",
+      "pokeball_5",
+      "pokeball_6",
+      "pokeball_7",
+      "pokeball_8",
+      "pokeball_9"
+    ]
+  },
+  "meta": {
+    "image": "pokeballs_cropped.png",
+    "size": {
+      "w": 64,
+      "h": 168
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "frames": {
+    "tallgrass_1": {
+      "frame": { "x": 0, "y": 0, "w": 16, "h": 16 }
+    },
+    "tallgrass_2": {
+      "frame": { "x": 0, "y": 16, "w": 16, "h": 16 }
+    },
+    "tallgrass_3": {
+      "frame": { "x": 0, "y": 32, "w": 16, "h": 16 }
+    },
+    "tallgrass_4": {
+      "frame": { "x": 0, "y": 48, "w": 16, "h": 16 }
+    },
+    "tallgrass_5": {
+      "frame": { "x": 0, "y": 64, "w": 16, "h": 16 }
+    },
+    "tallgrass_6": {
+      "frame": { "x": 0, "y": 80, "w": 16, "h": 16 }
+    },
+    "grass_1": {
+      "frame": { "x": 16, "y": 0, "w": 16, "h": 16 }
+    },
+    "grass_2": {
+      "frame": { "x": 16, "y": 16, "w": 16, "h": 16 }
+    },
+    "grass_3": {
+      "frame": { "x": 32, "y": 0, "w": 16, "h": 16 }
+    },
+    "grass_4": {
+      "frame": { "x": 32, "y": 16, "w": 16, "h": 16 }
+    },
+    "quarter_grass_1": {
+      "frame": { "x": 16, "y": 32, "w": 8, "h": 8 }
+    },
+    "quarter_grass_2": {
+      "frame": { "x": 24, "y": 40, "w": 8, "h": 8 }
+    },
+    "pokeball": {
+      "frame": { "x": 32, "y": 32, "w": 16, "h": 16 }
+    },
+    "tree": {
+      "frame": { "x": 16, "y": 48, "w": 32, "h": 48 }
+    }
+
+  },
+  "animations": {
+    "tallgrass": [
+      "tallgrass_1",
+      "tallgrass_2",
+      "tallgrass_3",
+      "tallgrass_4",
+      "tallgrass_5",
+      "tallgrass_6"
+    ]
+},
+  "meta": {
+    "image": "tileset.png",
+    "size": { "w": 48, "h": 96 }
+  }
+}
