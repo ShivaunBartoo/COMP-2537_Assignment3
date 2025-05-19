@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+
 body {
     margin: 0;
     padding: 0;
-    color: rgba(255, 255, 255, 0.87);
     background-color: #000000;
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5em;
 }
 
 #app {
@@ -18,12 +23,7 @@ canvas {
     image-rendering: pixelated;
 }
 
-.title {
-    font-size: larger;
-    color: red;
-}
-
-#ui{
+#ui {
     position: absolute;
     top: 0;
     left: 0;
@@ -34,5 +34,175 @@ canvas {
     justify-content: start;
     align-items: center;
     pointer-events: none;
+}
 
+#ui * {
+    pointer-events: auto;
+}
+
+#timer {
+    font-size: 4em;
+}
+
+#gameover-message {
+    font-size: 2em;
+}
+
+#header-bar {
+    width: 80%;
+    height: 40px;
+    margin-top: 20px;
+    border-style: solid;
+    border-image-source: url('assets/header_bar.png');
+    border-width: 4px 32px 8px 32px;
+    border-image-slice: 4 32 8 32;
+    border-image-repeat: stretch;
+
+}
+
+#header-bar-contents {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #f8f8f8;
+    color: #39312a;
+}
+
+#game-dialogue {
+    width: 50%;
+    height: 240px;
+    margin-top: 20px;
+    border-style: solid;
+    border-image-source: url('assets/dialogue_box.png');
+    border-width: 8px 12px 12px 8px;
+    border-image-slice: 8 12 12 8;
+    border-image-repeat: stretch;
+    color: #39312a;
+
+}
+
+#game-dialogue-contents {
+    height: calc(100% - 8px);
+    background-color: #f8f8f8;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+#title {
+    font-size: 2em;
+    color: #f8f8f8;
+    text-shadow:
+        -4px -4px 0 #706050,
+        4px -4px 0 #706050,
+        -4px 4px 0 #706050,
+        4px 4px 0 #706050,
+        0px -4px 0 #706050,
+        0px 4px 0 #706050,
+        -4px 0px 0 #706050,
+        4px 0px 0 #706050;
+}
+
+#difficulty-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.button:hover {
+    filter: brightness(0.9);
+}
+
+.difficulty-button {
+    height: 30px;
+    width: 80px;
+    border-style: solid;
+    border-image-source: url('assets/select-button.png');
+    border-width: 4px 16px 8px 12px;
+    border-image-slice: 4 16 8 12;
+    border-image-repeat: stretch;
+    pointer-events: auto;
+}
+
+.difficulty-button-contents {
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;
+    color: #39312a;
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialogue {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.difficulty-button.selected {
+    border-image-source: url('assets/select-button_selected.png');
+}
+
+.difficulty-button.selected .difficulty-button-contents {
+    background-color: #f9e8ca;
+}
+
+.start-button {
+    margin-bottom: 10px;
+    height: 30px;
+    width: 120px;
+    border-style: solid;
+    border-image-source: url('assets/button.png');
+    border-width: 8px 8px 12px 8px;
+    border-image-slice: 8 8 12 8;
+    border-image-repeat: stretch;
+    pointer-events: auto;
+}
+
+.start-button-contents {
+    width: 100%;
+    height: 100%;
+    background-color: #f8f8f8;
+    color: #39312a;
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* source: https://css-loaders.com/classic/ */
+.loader {
+    width: fit-content;
+    font-size: 30px;
+    color: #39312a;
+
+    clip-path: inset(0 1.2ch 0 0);
+    animation: l4 1s steps(4) infinite;
+}
+
+.loader:before {
+    content: "Loading Pokemon..."
+}
+
+@keyframes l4 {
+    to {
+        clip-path: inset(0 -1ch 0 0)
+    }
+}
+
+#error-message {
+    margin-top: 30px;
+    color: darkred;
+    text-align: center;
 }

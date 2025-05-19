@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
@@ -10,11 +11,60 @@
 
 <body>
     <div id="ui">
-        <div class="title">Poke-Match</div>
+        <div id="header-bar">
+            <div id="header-bar-contents">
+                <span>Clicks: <span id="click-count">0</span></span>
+                <span>Matches: <span id="current-matches">-</span></span>
+                <span>Remaining: <span id="remaining-matches">-</span></span>
+            </div>
+        </div>
+        <div id="game-dialogue">
+            <div id="game-dialogue-contents">
+
+                <div id="title">Poke-Match</div>
+
+                <div class="dialogue" id="ready-to-start-dialogue">
+                    <div id="difficulty-buttons">
+                        <div class="button difficulty-button selected" data-name="easy">
+                            <div class="difficulty-button-contents">Easy</div>
+                        </div>
+                        <div class="button difficulty-button" data-name="medium">
+                            <div class="difficulty-button-contents">Medium</div>
+                        </div>
+                        <div class="button difficulty-button" data-name="hard">
+                            <div class="difficulty-button-contents">Hard</div>
+                        </div>
+                    </div>
+                    <div class="button start-button">
+                        <div class="start-button-contents">Start</div>
+                    </div>
+                </div>
+                <div class="dialogue hidden" id="loading-dialogue">
+                    <div class="loader"></div>
+                </div>
+                <div class="dialogue hidden" id="error-dialogue">
+                    <span id="error-message">API error while loading pokemon. Please wait a moment and then try again.</span>
+                    <div class="button start-button">
+                        <div class="start-button-contents">Restart</div>
+                    </div>
+                </div>
+                <div class="dialogue hidden" id="gameplay-dialogue">
+                    <div id="timer"></div>
+                    <div class="button start-button">
+                        <div class="start-button-contents">Restart</div>
+                    </div>
+                </div>
+                <div id="gameover-message"></div>
+
+            </div>
+
+        </div>
+    </div>
     </div>
     <div id="app">
         <div id="pixi-container"></div>
     </div>
     <script type="module" src="/src/main.js"></script>
 </body>
+
 </html>

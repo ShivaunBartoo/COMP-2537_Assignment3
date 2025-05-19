@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@pixi/ui": "^2.2.4",
+    "animate.css": "^4.1.1",
     "pixi.js": "^8.8.1",
     "random": "^5.4.0"
   },

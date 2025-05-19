@@ -1,5 +1,5 @@
 import { Sprite, AnimatedSprite, Container, Graphics, Ticker } from "pixi.js";
-import { getCurrentPokeball, gameState, gameStates } from "./main";
+import { getCurrentPokeball, gameState, gameStates, incrementClicks, onMatch, onWrongGuess } from "./main";
 
 export default class Card {
     constructor(grassTexture) {
@@ -35,7 +35,7 @@ export default class Card {
         this.pokemonContainer = new Container();
         this.container.addChild(this.pokemonContainer);
         this.pokemonContainer.label = "Pokemon Container";
-        this.mask = new Graphics().rect(0, 0, this.container.width * 2, this.container.height * 2).fill("red");
+        this.mask = new Graphics().rect(0, 0, this.container.width * 3, this.container.height * 2).fill("red");
         this.mask.label = "mask";
         this.mask.pivot.set(this.mask.width / 2, this.mask.height);
         this.mask.y += this.container.height / 2;
@@ -47,7 +47,6 @@ export default class Card {
         this.pokemonSprite.zIndex = 1;
 
         this.pokemonSprite.anchor.set(0.5);
-        // this.pokemonSprite.x = this.container.x;
         this.pokemonSprite.label = "Pokemon Sprite";
         this.pokemonSprite.visible = false;
     }
@@ -79,25 +78,34 @@ export default class Card {
     }
 
     async revealPokemon() {
+        incrementClicks();
         this.flipped = true;
         gameState.state = gameStates.revealing;
         this.playGrassAnimation();
         await this.playPokemonJump(150);
         if (!gameState.flippedCard) {
             gameState.flippedCard = this;
-            gameState.state = gameStates.guessing;
+            if (gameState.state != gameStates.readyToStart) {
+                gameState.state = gameStates.guessing;
+            }
         } else if (this.id == gameState.flippedCard.id) {
             console.log("match!");
+            onMatch();
             this.capturePokemon();
             gameState.flippedCard.capturePokemon();
             gameState.flippedCard = null;
-            gameState.state = gameStates.guessing;
+            if (gameState.state != gameStates.readyToStart) {
+                gameState.state = gameStates.guessing;
+            }
         } else {
             setTimeout(() => {
+                onWrongGuess();
                 this.reset();
                 gameState.flippedCard.reset();
                 gameState.flippedCard = null;
-                gameState.state = gameStates.guessing;
+                if (gameState.state != gameStates.readyToStart) {
+                    gameState.state = gameStates.guessing;
+                }
             }, 200);
         }
     }
@@ -148,7 +156,6 @@ export default class Card {
     }
 
     async reset() {
-        console.log("reset");
         this.pokemonSprite.visible = true;
         this.pokemonSprite.alpha = 1;
         this.pokemonSprite._baseY = this.pokemonSprite.y;
@@ -175,14 +182,12 @@ export default class Card {
                     );
                 if (yPrev < this.pokemonSprite.y) {
                     if (!this.falling) {
-                        console.log("falling");
                         this.falling = true;
                         this.grassAnimation.visible = true;
                         this.grassAnimation.gotoAndPlay(2);
                     }
                     this.pokemonSprite.alpha -= fadeSpeed;
                 } else if (this.pokemonSprite.y >= amplitude - offset) {
-                    console.log("reset resolved");
                     Ticker.shared.remove(this._popTicker);
                     this._popTicker = null;
                     this.falling = false;
@@ -209,17 +214,16 @@ export default class Card {
             const growRate = 0.1;
             let currentScale = 0;
             this._pokeballGrowTicker = () => {
-            currentScale += growRate;
-            if (currentScale >= 1) {
-                currentScale = 1;
-                this.pokeball.scale.set(currentScale, currentScale);
-                Ticker.shared.remove(this._pokeballGrowTicker);
-                this._pokeballGrowTicker = null;
-                this.pokemonSprite.visible = false;
-                resolve();
-            } else {
-                this.pokeball.scale.set(currentScale, currentScale);
-            }
+                currentScale += growRate;
+                if (currentScale >= 1) {
+                    currentScale = 1;
+                    this.pokeball.scale.set(currentScale, currentScale);
+                    Ticker.shared.remove(this._pokeballGrowTicker);
+                    this._pokeballGrowTicker = null;
+                    resolve();
+                } else {
+                    this.pokeball.scale.set(currentScale, currentScale);
+                }
             };
             Ticker.shared.add(this._pokeballGrowTicker);
         });
@@ -231,10 +235,11 @@ export default class Card {
             this._captureTicker = () => {
                 this.pokemonSprite.scale.set(currentScale, currentScale);
                 currentScale -= shrinkRate;
-                if(this.pokemonSprite.y < 0){
+                if (this.pokemonSprite.y < 0) {
                     this.pokemonSprite.y += 0.5;
                 }
-                if(currentScale <= 0){
+                if (currentScale <= 0) {
+                    this.pokemonSprite.visible = false;
                     Ticker.shared.remove(this._captureTicker);
                     this._captureTicker = null;
                     resolve();
@@ -244,12 +249,11 @@ export default class Card {
         });
         this.pokeball.animationSpeed = 0.5;
         this.pokeball.onFrameChange = () => {
-            if(this.pokeball.currentFrame == 7){
-                if(this.pokeball.animationSpeed < 0.35){
-                    this.pokeball.gotoAndStop(8)
+            if (this.pokeball.currentFrame == 7) {
+                if (this.pokeball.animationSpeed < 0.35) {
+                    this.pokeball.gotoAndStop(8);
                     setTimeout(() => this.pokeball.gotoAndStop(0), 300);
-                }
-                else{
+                } else {
                     this.pokeball.animationSpeed -= 0.1;
                     this.pokeball.gotoAndPlay(0);
                 }
