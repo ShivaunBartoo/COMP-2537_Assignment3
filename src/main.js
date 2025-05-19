@@ -1,18 +1,35 @@
-import { AnimatedSprite, Sprite, Application, Assets, Container } from "pixi.js";
+import { Sprite, Application, Assets, Container } from "pixi.js";
 import Card from "./card.js";
 import random from "random";
 
-const app = await initializeApplication();
+let app;
+let tileset;
+let pokemonNames;
+let pokeballTextures;
+let gameContainer;
 
 const cardSize = 24;
 const tileSize = 16;
 let cardsXWidth = 3;
 let cardsYWidth = 4;
 const pokemonMax = 151;
-const pokemonNames = await loadPokemonNames(pokemonMax);
-const pokeballTextures = await loadPokeballTextures();
+
+let cards = [];
+
+export const gameStates = {
+    initializing: "initializing",
+    readyToStart: "readyToStart",
+    guessing: "guessing",
+    revealing: "revealing",
+};
+
+export const gameState = {
+    state: gameStates.initializing,
+    flippedCard: null,
+};
+
 let currentPokeball = "pokeball";
-let getCurrentPokeball = () => {
+export let getCurrentPokeball = () => {
     switch (currentPokeball) {
         case "pokeball":
             return pokeballTextures.pokeball;
@@ -25,79 +42,86 @@ let getCurrentPokeball = () => {
     }
 };
 
-await loadPokeballTextures();
-const tileset = await loadTileset();
-const gameContainer = initializeGameContainer();
-// const backgroundContainer = loadBackground();
-// drawBackground();
-let cards = [];
-loadCards(cardsXWidth, cardsYWidth);
-
-positionGameContainer();
-
-function getGameScale() {
-    return gameContainer.scale.y;
+//#region Initialize
+initializeGame();
+async function initializeGame() {
+    await initializePixiApp();
+    pokemonNames = await loadPokemonNames(pokemonMax);
+    pokeballTextures = await loadPokeballTextures();
+    tileset = await loadTileset();
+    gameContainer = await initializeGameContainer();
+    loadBackground();
+    gameState.state = gameStates.readyToStart;
 }
 
-async function initializeApplication() {
-    const app = new Application();
+async function initializePixiApp() {
+    app = new Application();
     globalThis.__PIXI_APP__ = app;
     await app.init({ background: "#70c8a0", resizeTo: window });
     document.getElementById("pixi-container").appendChild(app.canvas);
-    return app;
 }
 
--0.15
+async function loadPokemonNames(count) {
+    let response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=${count}`);
+    let json = await response.json();
+    return json.results.map((pokemon) => pokemon.name);
+}
 
-function initializeGameContainer() {
+async function loadPokeballTextures() {
+    const sheet = await Assets.load("/assets/pokeballs.json");
+
+    for (let texture of Object.values(sheet.textures)) {
+        texture.source.scaleMode = "nearest";
+    }
+    return {
+        pokeball: sheet.animations.pokeball,
+        greatball: sheet.animations.greatball,
+        ultraball: sheet.animations.ultraball,
+        masterball: sheet.animations.masterball,
+    };
+}
+
+async function loadTileset() {
+    const sheet = await Assets.load("/assets/tileset.json");
+    for (let texture of Object.values(sheet.textures)) {
+        texture.source.scaleMode = "nearest";
+    }
+    return sheet;
+}
+
+async function initializeGameContainer() {
     const container = new Container();
     container.label = "Game Container";
     app.stage.addChild(container);
-    // container.position.set(app.renderer.width / 2, app.renderer.height / 2);
-
-
-    // Position the container in the center of the screen
-
-    return container;
-}
-
-function positionGameContainer(){
-    console.log("width: " +gameContainer.width);
-    let x = ((cardsXWidth * cardSize / 2) - (cardSize * 0.5));
-    let y = ((cardsYWidth * cardSize / 2) - (cardSize * 0.5));
-    console.log(x + ", " + y)
-    gameContainer.pivot.set(x, y );
-    gameContainer.position.set(app.renderer.width / 2, app.renderer.height / 2);
-        const scale = () => {
-        // const scale = app.screen.width / 300;
-
-        // gameContainer.scale = scale;
-        gameContainer.height = app.renderer.height * 0.5;
-        console.log(gameContainer.scale.x);
-        gameContainer.scale.x = gameContainer.scale.y;
-                // gameContainer.scale.x = gameContainer.scale.y;
-
-            gameContainer.position.set(app.renderer.width / 2, app.renderer.height / 2);
-
+    await loadCards(container, cardsXWidth, cardsYWidth);
+    const scaleFactor = 0.5;
+    //this is some quirky Pixi.js magic.
+    //I bashed my head against it until I figured out how to center the pivot.
+    let x = (cardsXWidth * cardSize) / 2 - cardSize * 0.5;
+    let y = (cardsYWidth * cardSize) / 2 - cardSize * 0.5;
+    container.pivot.set(x, y);
+    container.position.set(app.renderer.width / 2, app.renderer.height / 2);
+    const scale = () => {
+        container.height = app.renderer.height * scaleFactor;
+        container.scale.x = container.scale.y;
+        container.position.set(app.renderer.width / 2, app.renderer.height / 2);
     };
     app.renderer.on("resize", scale);
     scale();
-
+    return container;
 }
 
-async function loadCards(width, height) {
+async function loadCards(gameContainer, width, height) {
     if ((width * height) % 2 != 0) {
         throw new Error("The number of cards must be even.");
     }
     let grassTexture = tileset.animations.tallgrass;
-    // let pokeballTexture = getCurrentPokeball();
 
     const spriteWidth = 24;
     const spriteHeight = 24;
     const container = new Container();
     container.label = "Card Container";
 
-    //add cards to the container
     for (let x = 0; x < width; x++) {
         for (let y = 0; y < height; y++) {
             const card = new Card(grassTexture);
@@ -107,12 +131,51 @@ async function loadCards(width, height) {
             cards.push(card);
         }
     }
-
-    //center the container in its parent container
-    // container.pivot.set(container.width / 2, container.height / 2);
-    // container.position.set(0, 0);
     gameContainer.addChild(container);
     // assignPokemonToCards();
+}
+
+function loadBackground() {
+    const container = new Container();
+    container.label = "Background Container";
+    app.stage.addChild(container);
+    container.zIndex = -1;
+    //draw background
+    function setTile(object, x, y) {
+        object.x = x * tileSize;
+        object.y = y * tileSize;
+    }
+    let groundTiles = [
+        tileset.textures.grass_1,
+        tileset.textures.grass_2,
+        tileset.textures.grass_3,
+        tileset.textures.grass_4,
+    ];
+    random.use("grass-seed");
+    for (let x = 0; x < 30; x++) {
+        for (let y = 0; y < 24; y++) {
+            let texture = groundTiles[random.int(0, 3)];
+            const tile = new Sprite(texture);
+            container.addChild(tile);
+            setTile(tile, x, y);
+        }
+    }
+    container.cacheAsTexture({ antialias: false, resolution: 4 });
+    //position background
+    container.pivot.set(container.width / 2, container.height / 2);
+    function useGameScale() {
+        container.position.set(app.screen.width / 2, app.screen.height / 2);
+        container.scale.set(gameContainer.scale.x, gameContainer.scale.y);
+    }
+    useGameScale();
+    app.renderer.on("resize", useGameScale);
+    return container;
+}
+// #endregion
+
+async function startGame() {
+    await assignPokemonToCards();
+    gameState.state = gameStates.guessing;
 }
 
 async function assignPokemonToCards() {
@@ -126,12 +189,7 @@ async function assignPokemonToCards() {
         pokemonTextures.splice(randomIndex, 1);
         card.assignPokemonToCard(randomTexture);
     }
-}
-
-async function loadPokemonNames(count) {
-    let response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=${count}`);
-    let json = await response.json();
-    return json.results.map((pokemon) => pokemon.name);
+    console.log("pokemon loaded");
 }
 
 async function loadPokemonTextures(count) {
@@ -145,11 +203,14 @@ async function loadPokemonTextures(count) {
     let pokemonImages = await Promise.all(
         numbers.map((num) => fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNames[num]}`))
     );
+
     pokemonImages = await Promise.all(pokemonImages.map((response) => response.json()));
     pokemonImages = pokemonImages.map(
         (pokemonData) => pokemonData.sprites.versions["generation-vii"].icons.front_default
     );
-
+    //This code was querying the github endpoint too hard and causing it to reject my connections.
+    //I wrote loadPokemonTexturesThrottled to slow down the queries slightly.
+    // --- Fast Version ---
     // let pokemonTextures = await Promise.all(pokemonImages.map(image => Assets.load(image)));
     // pokemonTextures.forEach(texture => texture.source.scaleMode = 'nearest');
     // return pokemonTextures;
@@ -163,90 +224,11 @@ async function loadPokemonTexturesThrottled(pokemonImages) {
             const texture = await Assets.load(image);
             texture.source.scaleMode = "nearest";
             pokemonTextures.push(texture);
-            // Optionally add a small delay to be polite to the server
-            await new Promise((res) => setTimeout(res, 100));
+            //add a small delay to be polite to the server
+            await new Promise((res) => setTimeout(res, 500));
         } catch (e) {
             console.warn(`Failed to load image: ${image}`, e);
         }
     }
     return pokemonTextures;
-}
-
-async function loadPokeballTextures() {
-    const sheet = await Assets.load("./public/assets/pokeballs.json");
-
-    for (let texture of Object.values(sheet.textures)) {
-        texture.source.scaleMode = "nearest";
-    }
-    return {
-        pokeball: sheet.animations.pokeball,
-        greatball: sheet.animations.greatball,
-        ultraball: sheet.animations.ultraball,
-        masterball: sheet.animations.masterball,
-    };
-    //   const anim = new AnimatedSprite(sheet.animations.pokeball);
-    // anim.animationSpeed = 0.1666;
-    // anim.x = app.screen.width / 2;
-    // anim.y = app.screen.height / 2;
-    // anim.scale = 4;
-    // anim.play();
-    // app.stage.addChild(anim);
-}
-
-async function loadTileset() {
-    const sheet = await Assets.load("./public/assets/tileset.json");
-    for (let texture of Object.values(sheet.textures)) {
-        texture.source.scaleMode = "nearest";
-    }
-    return sheet;
-}
-
-function loadBackground() {
-    const container = new Container();
-    container.label = "Background Container";
-    container.pivot.set(0.5, 0.5);
-    // container.position.set(app.screen.width / 2 / getGameScale(), app.screen.height / 2 / getGameScale());
-    gameContainer.addChild(container);
-    container.zIndex = -1;
-    let resizeTimeout;
-
-    // window.addEventListener("resize", () => {
-    //     clearTimeout(resizeTimeout);
-
-    //     resizeTimeout = setTimeout(() => {
-    //         drawBackground();
-    //     }, 200);
-    // });
-    return container;
-}
-
-function drawBackground() {
-    let groundTiles = [
-        tileset.textures.grass_1,
-        tileset.textures.grass_2,
-        tileset.textures.grass_3,
-        tileset.textures.grass_4,
-    ];
-    random.use("grass-seed");
-    backgroundContainer.removeChildren();
-
-    let xCount = Math.floor(app.screen.width / (tileSize * getGameScale())) + 6;
-    let yCount = Math.floor(app.screen.height / (tileSize * getGameScale())) + 6;
-    // console.log(`xCount ${xCount} yCount ${yCount}`);
-    for (let x = 0; x < xCount; x++) {
-        for (let y = 0; y < yCount; y++) {
-            let texture = groundTiles[random.int(0, 3)];
-            const tile = new Sprite(texture);
-            backgroundContainer.addChild(tile);
-            setTile(tile, x, y);
-        }
-    }
-    backgroundContainer.cacheAsTexture({ antialias: false, resolution: 4 });
-
-    // console.log("num children in bg: " + backgroundContainer.children.length);
-}
-
-async function setTile(object, x, y) {
-    object.x = x * tileSize;
-    object.y = y * tileSize;
 }
