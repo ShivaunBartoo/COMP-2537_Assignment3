@@ -30,6 +30,7 @@ export const gameState = {
     flippedCard: null,
 };
 
+console.log(`window width: ${window.innerWidth}px, window height: ${window.innerHeight}px`);
 let pokeballTextures;
 let currentPokeball = "pokeball";
 export let getCurrentPokeball = () => pokeballTextures[currentPokeball];
@@ -124,7 +125,7 @@ function positionGameContainer() {
     gameContainer.pivot.set(x, y);
     gameContainer.height = app.renderer.height * scaleFactor;
     gameContainer.scale.x = gameContainer.scale.y;
-    gameContainer.position.set(app.renderer.width / 2, app.renderer.height / 2 + 140);
+    gameContainer.position.set(app.renderer.width / 2, app.renderer.height / 2 + 60);
 }
 
 async function loadCards(width, height) {
@@ -217,7 +218,7 @@ function showPokeballSelector() {
 
     const pokeballKeys = Object.keys(pokeballTextures);
     const spacing = 16;
-    const yOffset = 60;
+    const yOffset = 20;
     let selectedIndex = pokeballKeys.indexOf(currentPokeball);
     let spriteWidth;
 
@@ -248,7 +249,7 @@ function showPokeballSelector() {
     });
 
     selectorContainer.pivot.x = selectorContainer.width / 2 - spriteWidth / 2;
-    selectorContainer.pivot.y = selectorContainer.height / 2 - spriteWidth / 2;
+    selectorContainer.pivot.y = selectorContainer.height - spriteWidth / 2;
 
     setPokeballSelectorScale = () => {
         selectorContainer.scale.set(gameContainer.scale.x, gameContainer.scale.y);
@@ -285,7 +286,8 @@ async function endGame(message) {
     gameState.state = gameStates.readyToStart;
     stopTimer();
     showDialogue("ready-to-start-dialogue");
-    document.querySelector("#gameover-message").innerHTML = message;
+    let gameoverElement = document.querySelector("#gameover-message");
+    gameoverElement.innerHTML = message;
 }
 
 async function assignPokemonToCards() {
@@ -353,7 +355,7 @@ export function onMatch() {
     remainingMatches--;
     consecutiveMatches++;
     if (consecutiveMatches >= 2) {
-      //powerup
+        //powerup
         increaseTimer(5);
     }
     updateMatches();
@@ -432,14 +434,13 @@ async function selectDifficulty(target) {
     setPokeballSelectorScale();
 }
 
-function showDialogue(id){
-  let dialogues = document.querySelectorAll(".dialogue");
-  for(let dialogue of dialogues){
-    if(!(dialogue.id == id)){
-      dialogue.classList.add("hidden");
+function showDialogue(id) {
+    let dialogues = document.querySelectorAll(".dialogue");
+    for (let dialogue of dialogues) {
+        if (!(dialogue.id == id)) {
+            dialogue.classList.add("hidden");
+        } else {
+            dialogue.classList.remove("hidden");
+        }
     }
-    else{
-      dialogue.classList.remove("hidden");
-    }
-  }
 }

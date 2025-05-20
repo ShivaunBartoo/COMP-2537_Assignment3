@@ -42,14 +42,36 @@ canvas {
 
 #timer {
     font-size: 4em;
+    text-align: center;
 }
 
 #gameover-message {
-    font-size: 2em;
+    width: 100%;
+    background-color: #f8f8f8b3;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 3em;
+    color: #f8f8f8;
+    --title-shadow-offset: 6px;
+    --title-shadow-color: #39312a;
+    /* ChatGPT generated. Adds a solid outline. */
+    text-shadow:
+        calc(-1 * var(--title-shadow-offset)) calc(-1 * var(--title-shadow-offset)) 0 var(--title-shadow-color),
+        var(--title-shadow-offset) calc(-1 * var(--title-shadow-offset)) 0 var(--title-shadow-color),
+        calc(-1 * var(--title-shadow-offset)) var(--title-shadow-offset) 0 var(--title-shadow-color),
+        var(--title-shadow-offset) var(--title-shadow-offset) 0 var(--title-shadow-color),
+        0px calc(-1 * var(--title-shadow-offset)) 0 var(--title-shadow-color),
+        0px var(--title-shadow-offset) 0 var(--title-shadow-color),
+        calc(-1 * var(--title-shadow-offset)) 0px 0 var(--title-shadow-color),
+        var(--title-shadow-offset) 0px 0 var(--title-shadow-color);
 }
 
 #header-bar {
     width: 80%;
+    max-width: 600px;
     height: 40px;
     margin-top: 20px;
     border-style: solid;
@@ -71,9 +93,9 @@ canvas {
 }
 
 #game-dialogue {
-    width: 50%;
-    height: 240px;
     margin-top: 20px;
+    width: 450px;
+    height: 160px;
     border-style: solid;
     border-image-source: url('assets/dialogue_box.png');
     border-width: 8px 12px 12px 8px;
@@ -94,20 +116,24 @@ canvas {
 }
 
 #title {
-    font-size: 2em;
+    font-size: 1.8em;
     color: #f8f8f8;
+    --title-shadow-offset: 4px;
+    --title-shadow-color: #706050;
+    /* ChatGPT generated. Adds a solid outline. */
     text-shadow:
-        -4px -4px 0 #706050,
-        4px -4px 0 #706050,
-        -4px 4px 0 #706050,
-        4px 4px 0 #706050,
-        0px -4px 0 #706050,
-        0px 4px 0 #706050,
-        -4px 0px 0 #706050,
-        4px 0px 0 #706050;
+        calc(-1 * var(--title-shadow-offset)) calc(-1 * var(--title-shadow-offset)) 0 var(--title-shadow-color),
+        var(--title-shadow-offset) calc(-1 * var(--title-shadow-offset)) 0 var(--title-shadow-color),
+        calc(-1 * var(--title-shadow-offset)) var(--title-shadow-offset) 0 var(--title-shadow-color),
+        var(--title-shadow-offset) var(--title-shadow-offset) 0 var(--title-shadow-color),
+        0px calc(-1 * var(--title-shadow-offset)) 0 var(--title-shadow-color),
+        0px var(--title-shadow-offset) 0 var(--title-shadow-color),
+        calc(-1 * var(--title-shadow-offset)) 0px 0 var(--title-shadow-color),
+        var(--title-shadow-offset) 0px 0 var(--title-shadow-color);
 }
 
 #difficulty-buttons {
+    margin: 5px;
     display: flex;
     gap: 10px;
 }
@@ -139,7 +165,7 @@ canvas {
 }
 
 .dialogue {
-    height: 100%;
+    height: calc(100% - 40px);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -155,7 +181,6 @@ canvas {
 }
 
 .start-button {
-    margin-bottom: 10px;
     height: 30px;
     width: 120px;
     border-style: solid;
