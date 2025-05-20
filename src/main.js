@@ -267,6 +267,7 @@ let setPokeballSelectorScale;
 async function startGame() {
     console.log("starting game");
     showDialogue("loading-dialogue");
+    document.querySelector("#click-count").innerHTML = "0";
     document.querySelector("#gameover-message").innerHTML = "";
     stopTimer();
     let { numCardsX, numCardsY } = getCurrentDifficulty();
