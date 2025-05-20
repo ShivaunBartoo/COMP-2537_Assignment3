@@ -266,6 +266,7 @@ let setPokeballSelectorScale;
 // #endregion
 
 async function startGame() {
+    gameState.state = gameStates.readyToStart;
     console.log("starting game");
     showDialogue("loading-dialogue");
     document.querySelector("#click-count").innerHTML = "0";
