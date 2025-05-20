@@ -84,7 +84,7 @@ async function loadPokemonNames(count) {
 }
 
 async function loadPokeballTextures() {
-    const sheet = await Assets.load("/assets/pokeballs.json");
+    const sheet = await Assets.load("./assets/pokeballs.json");
 
     for (let texture of Object.values(sheet.textures)) {
         texture.source.scaleMode = "nearest";
@@ -98,7 +98,7 @@ async function loadPokeballTextures() {
 }
 
 async function loadTileset() {
-    const sheet = await Assets.load("/assets/tileset.json");
+    const sheet = await Assets.load("./assets/tileset.json");
     for (let texture of Object.values(sheet.textures)) {
         texture.source.scaleMode = "nearest";
     }

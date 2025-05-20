@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "npm run dev",
-    "build": "npm run lint && vite build",
+    "build": "vite build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "dev": "vite"
   },
@@ -20,6 +21,7 @@
     "eslint": "^9.27.0",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
+    "gh-pages": "^6.3.0",
     "globals": "^16.1.0",
     "prettier": "^3.5.3",
     "vite": "^6.2.0"
